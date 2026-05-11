@@ -16,6 +16,7 @@ from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeo
 
 # ── Configuration ──────────────────────────────────────────────────────────
 SHAREDIEN_BASE = "https://karcher.sharedien.com"
+DASHBOARDS_URL = f"{SHAREDIEN_BASE}/dashboards"
 PRODUCT_BROWSER_URL = f"{SHAREDIEN_BASE}/browser/product_browser"
 ASSETS_URL = f"{SHAREDIEN_BASE}/browser/assets"
 LOGIN_URL = "https://auth.kaercher.com/account/login"
@@ -24,9 +25,11 @@ LOGIN_URL = "https://auth.kaercher.com/account/login"
 OUTPUT_DIR = Path(__file__).parent / "sharedien_output"
 IMAGES_DIR = OUTPUT_DIR / "images"
 DATA_FILE = OUTPUT_DIR / "assets.json"
+USER_DATA_DIR = Path(__file__).parent / ".playwright_data"
 
 OUTPUT_DIR.mkdir(exist_ok=True)
 IMAGES_DIR.mkdir(exist_ok=True)
+USER_DATA_DIR.mkdir(exist_ok=True)
 
 # Playwright config
 HEADLESS = False  # Set to True for headless mode
@@ -74,17 +77,21 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
     seen_image_urls = set()
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(channel="msedge", headless=HEADLESS, slow_mo=SLOW_MO)
-        context = browser.new_context(
+        # Use persistent context to save cookies and session data
+        context = p.chromium.launch_persistent_context(
+            user_data_dir=str(USER_DATA_DIR),
+            channel="msedge",
+            headless=HEADLESS,
+            slow_mo=SLOW_MO,
             viewport={"width": 1920, "height": 1080},
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         )
         page = context.new_page()
         page.set_default_timeout(TIMEOUT)
 
-        # ── Navigate directly to product browser ─────────────────────────────────
-        print(f"Navigating to {PRODUCT_BROWSER_URL} ...")
-        page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
+        # ── Navigate directly to dashboards ─────────────────────────────────────
+        print(f"Navigating to {DASHBOARDS_URL} ...")
+        page.goto(DASHBOARDS_URL, wait_until="domcontentloaded", timeout=60000)
         page.wait_for_load_state("networkidle", timeout=60000)
         time.sleep(5)
 
@@ -118,8 +125,8 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
                     page.wait_for_load_state("networkidle", timeout=30000)
                     print("  ✓ Disclaimer accepted")
                     time.sleep(3)
-                    # Re-navigate to product browser after accepting
-                    page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
+                    # Re-navigate to dashboards after accepting
+                    page.goto(DASHBOARDS_URL, wait_until="domcontentloaded", timeout=60000)
                     page.wait_for_load_state("networkidle", timeout=60000)
                     time.sleep(5)
                 else:
@@ -156,8 +163,8 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
                             page.wait_for_load_state("networkidle", timeout=30000)
                             print("  ✓ Disclaimer accepted")
                             time.sleep(3)
-                            # Re-navigate to product browser after accepting
-                            page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
+                            # Re-navigate to dashboards after accepting
+                            page.goto(DASHBOARDS_URL, wait_until="domcontentloaded", timeout=60000)
                             page.wait_for_load_state("networkidle", timeout=60000)
                             time.sleep(5)
                             break
@@ -165,16 +172,16 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
                         print("  ✗ Could not find accept button automatically.")
                         print("  Please accept the disclaimer in the browser window.")
                         input("  Press ENTER after accepting the disclaimer...")
-                        # Re-navigate to product browser after manual acceptance
-                        page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
+                        # Re-navigate to dashboards after manual acceptance
+                        page.goto(DASHBOARDS_URL, wait_until="domcontentloaded", timeout=60000)
                         page.wait_for_load_state("networkidle", timeout=60000)
                         time.sleep(5)
             except Exception as e:
                 print(f"  ✗ Error accepting disclaimer: {e}")
                 print("  Please accept the disclaimer in the browser window.")
                 input("  Press ENTER after accepting the disclaimer...")
-                # Re-navigate to product browser after manual acceptance
-                page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
+                # Re-navigate to dashboards after manual acceptance
+                page.goto(DASHBOARDS_URL, wait_until="domcontentloaded", timeout=60000)
                 page.wait_for_load_state("networkidle", timeout=60000)
                 time.sleep(5)
 
@@ -183,7 +190,7 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
             print("Detected login page. Please log in manually with your Sharedien/Kärcher credentials.")
             print("The credentials NL-3001004869 are for marketingportal, not Sharedien.")
             print("If you see a reCAPTCHA, solve it in the browser window.")
-            input("Press ENTER after you have logged in, solved any reCAPTCHA, and the product browser page has loaded...")
+            input("Press ENTER after you have logged in, solved any reCAPTCHA, and the dashboards page has loaded...")
             time.sleep(5)
 
         # ── Check for reCAPTCHA on any page ─────────────────────────────────────
@@ -344,7 +351,7 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
                 print(f"[{i+1}/{total}] Error extracting asset: {e}")
                 continue
 
-        browser.close()
+        context.close()
 
     return assets
 

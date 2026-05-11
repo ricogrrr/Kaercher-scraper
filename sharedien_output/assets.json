@@ -1,16 +1,1 @@
-[
-  {
-    "id": 1,
-    "name": "en flag",
-    "image_url": "/english_flag.svg",
-    "download_url": "",
-    "image_file": "en-flag.svg"
-  },
-  {
-    "id": 2,
-    "name": "de flag",
-    "image_url": "/german_flag.svg",
-    "download_url": "",
-    "image_file": "de-flag.svg"
-  }
-]
+[]

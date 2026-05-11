@@ -1,0 +1,11 @@
+# Playwright user data (cookies, session storage)
+.playwright_data/
+
+# Output directories
+output/
+sharedien_output/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
