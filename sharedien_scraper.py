@@ -91,42 +91,83 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
         # ── Handle disclaimer page ───────────────────────────────────────────
         if "Disclaimer" in page.url or page.locator("h1:has-text('Conditions of Use'), h1:has-text('Disclaimer')").count() > 0:
             print("Detected disclaimer page. Auto-accepting...")
-            try:
-                # Try multiple selector strategies for the accept button
-                accept_selectors = [
-                    "button:has-text('Accept')",
-                    "button:has-text('I agree')",
-                    "button:has-text('I Agree')",
-                    "input[type='submit'][value*='Accept']",
-                    "a:has-text('Accept')",
-                    "button:has-text('conditions')",
-                    "button[type='submit']",
-                    "input[type='submit']"
-                ]
 
-                for selector in accept_selectors:
-                    btn = page.locator(selector).first
-                    if btn.count():
-                        print(f"  Found accept button with selector: {selector}")
-                        btn.click()
-                        page.wait_for_load_state("networkidle", timeout=30000)
-                        print("  ✓ Disclaimer accepted")
-                        time.sleep(3)
-                        # Re-navigate to product browser
-                        page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
-                        page.wait_for_load_state("networkidle", timeout=60000)
-                        time.sleep(5)
-                        break
+            # Take screenshot for debugging
+            screenshot_path = OUTPUT_DIR / "disclaimer_debug.png"
+            page.screenshot(path=str(screenshot_path))
+            print(f"  Screenshot saved to: {screenshot_path}")
+
+            try:
+                # Try to click accept button using JavaScript (works even if not visible)
+                js_clicked = page.evaluate("""
+                    () => {
+                        const buttons = Array.from(document.querySelectorAll('button, input[type="submit"], a'));
+                        for (const btn of buttons) {
+                            const text = btn.textContent || btn.value || '';
+                            if (text.toLowerCase().includes('accept')) {
+                                btn.click();
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                """)
+
+                if js_clicked:
+                    print("  ✓ Clicked accept button using JavaScript")
+                    page.wait_for_load_state("networkidle", timeout=30000)
+                    print("  ✓ Disclaimer accepted")
+                    time.sleep(3)
                 else:
-                    print("  Could not find accept button. Please accept manually.")
-                    input("Press ENTER after accepting the disclaimer...")
-                    page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
-                    page.wait_for_load_state("networkidle", timeout=60000)
+                    print("  ✗ Could not find accept button with JavaScript.")
+                    # Try Playwright selectors as fallback
+                    accept_selectors = [
+                        "button:has-text('Accept')",
+                        "button:has-text('I agree')",
+                        "button:has-text('I Agree')",
+                        "button:has-text('accept')",
+                        "input[type='submit'][value*='Accept']",
+                        "input[type='submit'][value*='accept']",
+                        "a:has-text('Accept')",
+                        "a:has-text('accept')",
+                        "button[type='submit']",
+                        "input[type='submit']",
+                        ".btn-primary",
+                        "button.btn-primary",
+                        "button.accept",
+                        "button[class*='accept']",
+                        "#accept",
+                        "[id*='accept']"
+                    ]
+
+                    print(f"  Trying Playwright selectors...")
+                    for selector in accept_selectors:
+                        btn = page.locator(selector).first
+                        if btn.count():
+                            # Scroll button into view and click
+                            btn.scroll_into_view_if_needed()
+                            time.sleep(1)
+                            print(f"  ✓ Found accept button with selector: {selector}")
+                            btn.click()
+                            page.wait_for_load_state("networkidle", timeout=30000)
+                            print("  ✓ Disclaimer accepted")
+                            time.sleep(3)
+                            break
+                    else:
+                        print("  ✗ Could not find accept button automatically.")
+                        print("  Please accept the disclaimer in the browser window.")
+                        input("  Press ENTER after accepting the disclaimer...")
             except Exception as e:
-                print(f"  Error accepting disclaimer: {e}")
-                input("Press ENTER after accepting the disclaimer...")
-                page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
-                page.wait_for_load_state("networkidle", timeout=60000)
+                print(f"  ✗ Error accepting disclaimer: {e}")
+                print("  Please accept the disclaimer in the browser window.")
+                input("  Press ENTER after accepting the disclaimer...")
+
+        # ── Handle login page ─────────────────────────────────────────────────
+        if "login" in page.url.lower() or "authentication" in page.url.lower():
+            print("Detected login page. Please log in manually with your Sharedien/Kärcher credentials.")
+            print("The credentials NL-3001004869 are for marketingportal, not Sharedien.")
+            input("Press ENTER after you have logged in and the product browser page has loaded...")
+            time.sleep(5)
 
         # Give SPA time to render
         print("Waiting for SPA to render...")

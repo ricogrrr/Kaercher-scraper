@@ -1,0 +1,131 @@
+<!DOCTYPE html><html><head>
+    <link rel="icon" type="image/x-icon" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
+        <link rel="stylesheet" href="/css/theme_variables.css">
+        <link rel="stylesheet" href="https://krrshrstrprod.blob.core.windows.net/storagehandler-blob/2e22c68f-5292-41b2-8787-082037cc5e2e?sv=2025-01-05&amp;spr=https&amp;se=2026-06-10T03%3A30%3A48Z&amp;sr=b&amp;sp=r&amp;rscd=inline%3BfileName%3Dkarcher_theme.css&amp;rsct=text%2Fcss&amp;sig=5gOnEJDObW7KlAjmMfni7L%2FsHfuUzXsU4YqxeamRBjo%3D">
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sharedien Authentication</title>
+<link rel="stylesheet" href="/css/fontawesome-5.10.1-all.min.css">
+<link rel="stylesheet" href="/css/fontface.css">
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/site.css">
+<link rel="stylesheet" href="/css/overrides.css">
+<link rel="stylesheet" href="/css/text.css">
+<link rel="stylesheet" href="/css/button.css">
+<link rel="stylesheet" href="/css/input.css">
+<link rel="stylesheet" href="/css/select.css">
+<link rel="stylesheet" href="/css/textarea.css">
+<link rel="stylesheet" href="/css/checkbox.css">
+<link rel="stylesheet" href="/css/divider.css">
+<link rel="stylesheet" href="/css/anchor.css">
+<link rel="stylesheet" href="/css/container.css">
+<link rel="stylesheet" href="/css/dropdown.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/label.css">
+<link rel="stylesheet" href="/css/form.css">
+<link rel="stylesheet" href="/css/views/_split_layout.css">
+<link rel="stylesheet" href="/css/views/account_status.css">
+<link rel="stylesheet" href="/css/views/disclaimer.css">
+<link rel="stylesheet" href="/css/views/error.css">
+<link rel="stylesheet" href="/css/views/logged_out.css">
+<link rel="stylesheet" href="/css/views/login.css">
+<link rel="stylesheet" href="/css/views/new_password.css">
+<link rel="stylesheet" href="/css/views/register.css">
+<link rel="stylesheet" href="/css/views/renew_account.css">
+<link rel="stylesheet" href="/css/views/reset_password.css">
+<link rel="stylesheet" href="/css/views/verify_email.css">
+
+</head>
+<body>
+<div style="background-image: url('/background.jpg');" class="main-container background-image">
+    <div class="topbar">
+        <div class="actions">
+            <div class="language-dropdown dropdown">
+                <button onclick="toggleDropDown('language-dropdown')" class="dropdown-button text">
+                        <span class="language dropdown-button-text" lang-id="en">
+                            <img src="/english_flag.svg" alt="en flag" style="width: 24px; height: 16px; margin-right: 6px; vertical-align: middle;">
+                            <span data-i18n="language.english">English</span>
+                        </span>
+                        <span class="language hidden dropdown-button-text" lang-id="de">
+                            <img src="/german_flag.svg" alt="de flag" style="width: 24px; height: 16px; margin-right: 6px; vertical-align: middle;">
+                            <span data-i18n="language.german">German</span>
+                        </span>
+                    <i class="fas fa-caret-down" style="margin-left: 6px;"></i>
+                </button>
+                <div id="language-dropdown" class="dropdown-content align-right">
+                        <label for="en" class="language hidden dropdown-item" lang-id="en" onclick="changeDisplayLanguage('en')">
+                            <img src="/english_flag.svg" alt="en flag" style="width: 24px; height: 16px; margin-right: 8px; vertical-align: middle;">
+                            <span data-i18n="language.english">English</span>
+                        </label>
+                        <form action="/SetLanguage?language=en&amp;returnUrl=~%2FDisclaimer%3FreturnUrl%3D%252Fconnect%252Fauthorize%252Fcallback%253Fresponse_type%253Dcode%2526client_id%253Dsharedien-web%2526state%253DWExVdkQ5OUZTS2d4d04ySzVIZmlUVG9tSHprWnl5SERrSXlIV2d4QjQ1bEwy%2526redirect_uri%253Dhttps%25253A%25252F%25252Fkarcher.sharedien.com%25252Fbrowser%25252Fproduct_browser%25252F%2526scope%253Dopenid%252520email%252520profile%252520profile.extended%252520sharedien-api%252520offline_access%2526code_challenge%253DrrTysWE4Fqu5I2nmeuqdadvO6DuIGVNfThyqXM4hgCo%2526code_challenge_method%253DS256%2526nonce%253DWExVdkQ5OUZTS2d4d04ySzVIZmlUVG9tSHprWnl5SERrSXlIV2d4QjQ1bEwy" method="post" novalidate="novalidate">
+                            <button id="en" type="submit" style="display: none;"></button>
+                        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8NPbVQVJz_VOkU8Y-NBvAhRmcx6UwSS1A30H8HT7v0-4dycLx46KFOFko1tv2biU-e0Z4OA6zAxSJCLzmlhPMBuc6i7EGN060rL3tCuIlrUyRN7p-Tnob0Lp8vPROAU1l7PT2ukBeCDdBmvkD6ow4uU"></form>
+                        <label for="de" class="language dropdown-item" lang-id="de" onclick="changeDisplayLanguage('de')">
+                            <img src="/german_flag.svg" alt="de flag" style="width: 24px; height: 16px; margin-right: 8px; vertical-align: middle;">
+                            <span data-i18n="language.german">German</span>
+                        </label>
+                        <form action="/SetLanguage?language=de&amp;returnUrl=~%2FDisclaimer%3FreturnUrl%3D%252Fconnect%252Fauthorize%252Fcallback%253Fresponse_type%253Dcode%2526client_id%253Dsharedien-web%2526state%253DWExVdkQ5OUZTS2d4d04ySzVIZmlUVG9tSHprWnl5SERrSXlIV2d4QjQ1bEwy%2526redirect_uri%253Dhttps%25253A%25252F%25252Fkarcher.sharedien.com%25252Fbrowser%25252Fproduct_browser%25252F%2526scope%253Dopenid%252520email%252520profile%252520profile.extended%252520sharedien-api%252520offline_access%2526code_challenge%253DrrTysWE4Fqu5I2nmeuqdadvO6DuIGVNfThyqXM4hgCo%2526code_challenge_method%253DS256%2526nonce%253DWExVdkQ5OUZTS2d4d04ySzVIZmlUVG9tSHprWnl5SERrSXlIV2d4QjQ1bEwy" method="post" novalidate="novalidate">
+                            <button id="de" type="submit" style="display: none;"></button>
+                        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8NPbVQVJz_VOkU8Y-NBvAhRmcx6UwSS1A30H8HT7v0-4dycLx46KFOFko1tv2biU-e0Z4OA6zAxSJCLzmlhPMBuc6i7EGN060rL3tCuIlrUyRN7p-Tnob0Lp8vPROAU1l7PT2ukBeCDdBmvkD6ow4uU"></form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="main-content">
+        
+<div class="disclaimer-containers floating-container">
+    <form method="post" action="/Disclaimer/Accept" novalidate="novalidate">
+        <input type="hidden" id="ReturnUrl" name="ReturnUrl" value="/connect/authorize/callback?response_type=code&amp;client_id=sharedien-web&amp;state=WExVdkQ5OUZTS2d4d04ySzVIZmlUVG9tSHprWnl5SERrSXlIV2d4QjQ1bEwy&amp;redirect_uri=https%3A%2F%2Fkarcher.sharedien.com%2Fbrowser%2Fproduct_browser%2F&amp;scope=openid%20email%20profile%20profile.extended%20sharedien-api%20offline_access&amp;code_challenge=rrTysWE4Fqu5I2nmeuqdadvO6DuIGVNfThyqXM4hgCo&amp;code_challenge_method=S256&amp;nonce=WExVdkQ5OUZTS2d4d04ySzVIZmlUVG9tSHprWnl5SERrSXlIV2d4QjQ1bEwy">
+        <input type="hidden" data-val="true" data-val-required="The IsExternal field is required." id="IsExternal" name="IsExternal" value="False">
+        <div class="disclaimer-content">
+            <h2>Conditions of Use for Image and Video Material (As at December 2019)</h2>
+            <style>
+p, h3 { font-family:"Open Sans", sans-serif; font-weight: 400; }
+.important { font-size: 20px; color: red; }
+</style>
+
+<h3>Preamble</h3> <p> With its image and video database for advertising and product descriptions Alfred Kärcher SE &amp; Co. KG (hereinafter "Kärcher") provides pictures and photographs (hereinafter "Photographic Material") and videos and films (hereinafter "Video Material"), hereinafter referred to for Photo and Video material collectively as "Work" or "Works". These Works can be used free of charge by those authorised when in accordance with these conditions of use. </p> <h3>1. Scope</h3> <p> The following conditions of use govern the use of the database by the user and the rights to use the Works provided. </p> <h3>2. Subject to Alterations</h3> <p> Kärcher is entitled to modify the content of these conditions of use at any time. </p> <h3>3. Granting of Rights</h3> <p> 3.1 Kärcher grants to the user a non-exclusive right to use the work downloaded by the user to the following extent. The right to use is limited to the term of these conditions of use, unless a shorter period is specified in the detailed information for a particular Work. The Works may only be used in connection with original Kärcher products and may not impair the brand image of Kärcher. Furthermore, the Works may only be used in accordance with the Kärcher Corporate Design. The consequences of termination are set down in section 10.2. </p> <p> 3.2 The grant of rights to use under section 3.1 is limited to: </p> <p> 3.2.1 Making available of the Works to the public on the website of the user as well as on online market places and social media. </p> <p> 3.2.2 Using banner advertisements and online marketing measures provided that the corresponding legal provisions (no spam) are met. </p> <p> 3.2.3 The right to use and reproduce Photographic Material for use in advertising material and sales catalogues distributed free of charge. </p> <p> 3.2.4 The right to use the Works in its brick and mortar stores. Outside of the stores, their use is only permitted for the user's sales events or trade fairs, at which the user takes part as a seller. </p> <p> 3.2.5 The right to pass the Works on to third parties as part of their normal operations (e.g. to printers or advertising agencies), if these advertising material is created for the user, in so far as this is necessary for the creation and organisation of the abovementioned advertising material. </p> <p> 3.2.6 A use beyond rights to use set down in sections 3.2.1 to 3.2.5 is forbidden to the user. </p> <p> 3.3 The user must comply with the limitations of use in territory, time or scope set out in the detailed information listed for each image. </p> <p> 3.4 The user's staff and others, who have access to the Works, must be informed of the scope of the right to use. </p> <p> 3.5 The granting of rights is royalty-free. </p> <h3>4. No Transfer</h3> <p> The distribution, sub-licensing or transfer of the rights to use for the Works is expressly forbidden - subject to section 3.2.5. </p> <h3>5. No Adaptation</h3> <p> The right to modify the Photographic Material is limited to crop the right part of the image. In this instance it is necessary to ensure that the Photographic Material is not distorted and that the proportions and image quality remain unchanged. Retouching, distortion and addition to the Photographic Material (for example spare parts, other products, promotional messages or water marks) or any other method of processing the work is not permitted. Further information can be found in the Corporate Design from Kärcher. Video Material must not be modified. The user may, however, mention their business or company name in the credits. </p> <h3>6. Copyright Notice</h3> <p> The user may not remove or alter the copyright notices built into the Works. Also, in any case the user must comply with the copyright notice included in the detailed information for each image. </p> <h3>7. Forbidden Use</h3> <p> The Works may be used exclusively within the scope of the right to use and for legally permitted purposes. The Works may not be used in connection with insulting, defamatory, or racist statements, those glorifying violence or any other illegal statements or for other purposes. </p> <h3>8. Blocking of Users</h3> <p> In the event of a breach of these conditions of use, Kärcher has the right to block the access of the user to the database with immediate effect. </p> <h3>9. Liability</h3> <p> The user is liable for all breaches of these conditions of use. The user is also liable for any unlicensed use of the Works or for missing or incorrectly included copyright notices. The user fully indemnifies Kärcher against any claims from third parties. </p> <h3>10. Validity and Termination</h3> <p> 10.1 The contract that comes into effect by the acceptance of these conditions of use is valid for an unlimited period, unless it is terminated in accordance with section 10. Furthermore, these conditions of use end automatically if the trade/distribution agreements with the user are wound up. </p> <p> Kärcher can terminate the contract for convenience with a period of notice of six months. The right to terminate for cause shall remain unaffected. </p> <p> 10.2 When the right to use is terminated, the user must immediately cease the use of the Works, in particular, it must remove those Works from its internet sites, from offers on online market places, social media and from its stores, as well as ceasing display and/ or performance in its business premises. Printed advertising material may no longer be used and must be destroyed. </p> <h3>11. Final Provisions</h3> <p> The contract for use coming into effect by the acceptance of these conditions of use is governed by German law excluding the United Nations Convention on Contracts for the International Sale of Goods. The place of jurisdiction is Stuttgart (Centre). Kärcher reserves, however, the right to sue at the general place of jurisdiction of the user. </p>
+
+<p>I agree that I have read and accepted the Conditions of Use.</p>
+        </div>
+        <div class="disclaimer-actions">
+            <div class="acceptance">
+                <input id="acceptance-checkbox" class="custom-checkbox" type="checkbox" data-val="true" data-val-required="The hasAcceptedDisclaimer field is required." name="hasAcceptedDisclaimer" value="true">
+                <label class="custom-checkbox-label" for="acceptance-checkbox">
+                        <span class="license-acceptance-text" data-i18n="[html]disclaimer.accept_checkbox">I agree to these conditions</span>
+                </label>
+            </div>
+            <button id="disclaimer-submit-button" class="sh-button primary raised medium small ucase" type="submit" disabled="" data-i18n="action.accept">Accept</button>
+        </div>
+    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8NPbVQVJz_VOkU8Y-NBvAhRmcx6UwSS1A30H8HT7v0-4dycLx46KFOFko1tv2biU-e0Z4OA6zAxSJCLzmlhPMBuc6i7EGN060rL3tCuIlrUyRN7p-Tnob0Lp8vPROAU1l7PT2ukBeCDdBmvkD6ow4uU"><input name="hasAcceptedDisclaimer" type="hidden" value="false"></form>
+</div>
+
+
+    </div>
+</div>
+
+<script>
+    const applicationBasePath = '';
+</script>
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/validation/jquery.validate.min.js"></script>
+<script src="/lib/validation/jquery.validate.unobtrusive.min.js"></script>
+<script src="/lib/validation/customValidation.js"></script>
+<script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/lib/bluebird/bluebird3.5.0.min.js"></script>
+<script src="/lib/ie11-polyfills/array.js"></script>
+<script src="/lib/i18next/i18next17.0.12.min.js"></script>
+<script src="/lib/i18next/i18nextXHRBackend3.1.2.min.js"></script>
+<script src="/lib/i18next/i18nextBrowserLanguageDetector3.0.3.min.js"></script>
+<script src="/lib/i18next/jquery-i18next1.2.1.min.js"></script>
+<script src="/js/i18next.config.js"></script>
+<script src="/js/dropdown.js"></script>
+<script src="/js/translated-values.js"></script>
+<script src="/js/views/disclaimer.js"></script><script src="/js/views/login.js"></script><script src="/js/views/register.js"></script><script src="/js/views/shared.js"></script>
+
+
+
+</body></html>
