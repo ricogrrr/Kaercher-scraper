@@ -74,7 +74,7 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
     seen_image_urls = set()
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=HEADLESS, slow_mo=SLOW_MO)
+        browser = p.chromium.launch(channel="msedge", headless=HEADLESS, slow_mo=SLOW_MO)
         context = browser.new_context(
             viewport={"width": 1920, "height": 1080},
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"

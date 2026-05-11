@@ -15,7 +15,7 @@ from urllib.parse import urljoin, urlparse
 import requests
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeout
 
-# ── Configuration ──────────────────────────────────────────────────────────
+# Config
 BASE_URL = "https://dca.kaercher.com"
 GROUP_URL = f"{BASE_URL}/group-overview/20035385"
 LOGIN_URL = "https://marketingportal.karcher.com/home"
@@ -33,7 +33,7 @@ HEADLESS = False  # Set to True for headless mode
 SLOW_MO = 500     # ms between actions (helps with lazy-loading)
 TIMEOUT = 30000   # 30 seconds default timeout
 
-# ── Helper: download image ───────────────────────────────────────────────────
+# Image download
 def download_image(url: str, filename: str, headers: dict = None) -> bool:
     """Download an image to the images directory."""
     try:
@@ -61,14 +61,14 @@ def download_image(url: str, filename: str, headers: dict = None) -> bool:
         return False
 
 
-# ── Helper: slugify filename ─────────────────────────────────────────────────
+
 def slugify(text: str) -> str:
     """Convert text to a safe filename."""
     text = re.sub(r"[^\w\s-]", "", text).strip().lower()
     return re.sub(r"[-\s]+", "-", text)[:80]
 
 
-# ── Discovery mode: print page structure ─────────────────────────────────────
+
 def discover_selectors(page):
     """Print common product-related element counts to help identify selectors."""
     print("\n--- Discovery: common selectors ---")
@@ -83,13 +83,13 @@ def discover_selectors(page):
     print("--- End discovery ---\n")
 
 
-# ── Main scraping logic ──────────────────────────────────────────────────────
+# Main scraping logic
 def scrape_group_overview(username: str = None, password: str = None):
     products = []
-    seen_image_urls = set()  # Track to avoid duplicates
+    seen_image_urls = set()  # Duplicatie vermijden
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=HEADLESS, slow_mo=SLOW_MO)
+        browser = p.chromium.launch(channel="msedge", headless=HEADLESS, slow_mo=SLOW_MO)
         context = browser.new_context(
             viewport={"width": 1920, "height": 1080},
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -97,7 +97,7 @@ def scrape_group_overview(username: str = None, password: str = None):
         page = context.new_page()
         page.set_default_timeout(TIMEOUT)
 
-        # ── Optional login ─────────────────────────────────────────────────────
+        # Login
         # Login is only needed for marketingportal.karcher.com (high-res images)
         # The dca.kaercher.com site with products can be accessed directly
         if username and password:
@@ -313,7 +313,7 @@ def scrape_group_overview(username: str = None, password: str = None):
                 print(f"[{i+1}/{total}] Error extracting product: {e}")
                 continue
 
-        # ── Pagination handling (basic) ────────────────────────────────────
+        # Handle page
         # Look for a "next" or "load more" button and recurse
         next_btn_selectors = [
             "button:has-text('Next')", "a:has-text('Next')",
@@ -385,7 +385,7 @@ def scrape_remaining(page, chosen, start_index):
     return more
 
 
-# ── Entry point ────────────────────────────────────────────────────────────────
+# Entry
 if __name__ == "__main__":
     # Credentials can be passed as env vars or left empty for manual login
     USER = os.environ.get("KARCHER_USER", "")
