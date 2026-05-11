@@ -192,16 +192,27 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
             input("Press ENTER after solving the reCAPTCHA...")
             time.sleep(3)
 
+        # ── Check for reCAPTCHA error message ────────────────────────────────────
+        if page.locator("text=Could not connect to the reCAPTCHA service").count() > 0:
+            print("Detected reCAPTCHA connection error.")
+            print("Please refresh the page in the browser or check your internet connection.")
+            input("Press ENTER after refreshing or fixing the connection...")
+            time.sleep(3)
+
         # Give SPA time to render
         print("Waiting for SPA to render...")
         time.sleep(10)
 
         # Scroll to trigger lazy loading
         print("Scrolling to load all lazy content...")
-        for _ in range(15):
-            page.evaluate("window.scrollBy(0, document.body.scrollHeight)")
-            time.sleep(1)
-        page.evaluate("window.scrollTo(0, 0)")
+        try:
+            for _ in range(15):
+                page.evaluate("window.scrollBy(0, document.body.scrollHeight)")
+                time.sleep(1)
+            page.evaluate("window.scrollTo(0, 0)")
+        except Exception as e:
+            print(f"  Note: Scroll interrupted (page may have navigated): {e}")
+            time.sleep(2)
         time.sleep(2)
 
         # Save page snapshot for inspection
