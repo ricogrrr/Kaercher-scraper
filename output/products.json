@@ -1,0 +1,219 @@
+[
+  {
+    "id": 3,
+    "name": "Pressure washer image",
+    "image_url": "https://s1.kaercher-media.com/media/image/selection/143990/d0/pressure-washer-digital-catalog.jpg#webp",
+    "product_url": "",
+    "image_file": "pressure-washer-image.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Wet and dry vacuum cleaner image",
+    "image_url": "https://s1.kaercher-media.com/media/image/selection/143992/d0/wet-and-dry-vacs-digital-catalog.jpg#webp",
+    "product_url": "",
+    "image_file": "wet-and-dry-vacuum-cleaner-image.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Steam cleaner image",
+    "image_url": "https://s1.kaercher-media.com/media/image/selection/164904/d0/sc-3-upright-800.jpg#webp",
+    "product_url": "",
+    "image_file": "steam-cleaner-image.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Pressure washers",
+    "image_url": "https://s1.kaercher-media.com/images/pim/1317540_hero_06_300x200px.jpg",
+    "product_url": "",
+    "image_file": "pressure-washers.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Wet and dry vacuum cleaners",
+    "image_url": "https://s1.kaercher-media.com/images/pim/nass-trocken-sauger_hero_300x200.jpg",
+    "product_url": "",
+    "image_file": "wet-and-dry-vacuum-cleaners.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Patio Cleaner",
+    "image_url": "https://s1.kaercher-media.com/images/pim/PGB_Terrassenreiniger_default_300x200px.jpg",
+    "product_url": "",
+    "image_file": "patio-cleaner.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Mobile cleaning",
+    "image_url": "https://s1.kaercher-media.com/images/pim/Mobile_Cleaning_300x200px.jpg",
+    "product_url": "",
+    "image_file": "mobile-cleaning.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Pressure washers with combustion engine",
+    "image_url": "https://s1.kaercher-media.com/images/pim/PGB_Hochdruckreiniger_verbrenner_default_300x200px.jpg",
+    "product_url": "",
+    "image_file": "pressure-washers-with-combustion-engine.jpg"
+  },
+  {
+    "id": 19,
+    "name": "Pumps",
+    "image_url": "https://s1.kaercher-media.com/images/pim/Pumpen_hero_300x200_1.jpg",
+    "product_url": "",
+    "image_file": "pumps.jpg"
+  },
+  {
+    "id": 21,
+    "name": "Watering systems",
+    "image_url": "https://s1.kaercher-media.com/images/pim/Bewaesserungssysteme_neu_2025.jpg",
+    "product_url": "",
+    "image_file": "watering-systems.jpg"
+  },
+  {
+    "id": 23,
+    "name": "Push Sweepers",
+    "image_url": "https://s1.kaercher-media.com/images/pim/PGB_Kehrmaschinen_default_300x200px.jpg",
+    "product_url": "",
+    "image_file": "push-sweepers.jpg"
+  },
+  {
+    "id": 25,
+    "name": "Vacuum cleaners",
+    "image_url": "https://s1.kaercher-media.com/images/pim/BildformateFlyOut_Menu_Website_Staubsauger.jpg",
+    "product_url": "",
+    "image_file": "vacuum-cleaners.jpg"
+  },
+  {
+    "id": 27,
+    "name": "Ash vacuum cleaners",
+    "image_url": "https://s1.kaercher-media.com/images/pim/AD_hero_300x200.jpg",
+    "product_url": "",
+    "image_file": "ash-vacuum-cleaners.jpg"
+  },
+  {
+    "id": 29,
+    "name": "Spray extraction cleaners",
+    "image_url": "https://s1.kaercher-media.com/images/pim/SE_premium_hero_300x200.jpg",
+    "product_url": "",
+    "image_file": "spray-extraction-cleaners.jpg"
+  },
+  {
+    "id": 31,
+    "name": "Robot vacuums and mops",
+    "image_url": "https://s1.kaercher-media.com/images/pim/wisch_saugroboter_300x200.jpg",
+    "product_url": "",
+    "image_file": "robot-vacuums-and-mops.jpg"
+  },
+  {
+    "id": 33,
+    "name": "Window cleaning robot",
+    "image_url": "https://s1.kaercher-media.com/images/pim/Fensterroboter_1269230_300x200px.jpg",
+    "product_url": "",
+    "image_file": "window-cleaning-robot.jpg"
+  },
+  {
+    "id": 35,
+    "name": "Cordless electric brooms",
+    "image_url": "https://s1.kaercher-media.com/images/pim/BildformateFlyOut_Menu_Website_Akkubesen.jpg",
+    "product_url": "",
+    "image_file": "cordless-electric-brooms.jpg"
+  },
+  {
+    "id": 37,
+    "name": "Steam cleaners",
+    "image_url": "https://s1.kaercher-media.com/images/pim/BildformateFlyOut_Menu_Website_Dampfreiniger.jpg",
+    "product_url": "",
+    "image_file": "steam-cleaners.jpg"
+  },
+  {
+    "id": 39,
+    "name": "Steam vacuum cleaner",
+    "image_url": "https://s1.kaercher-media.com/images/pim/Produktgruppenbild_SCV_4_300x200px_72dpi.jpg",
+    "product_url": "",
+    "image_file": "steam-vacuum-cleaner.jpg"
+  },
+  {
+    "id": 41,
+    "name": "Window Vacs",
+    "image_url": "https://s1.kaercher-media.com/images/pim/BildformateFlyOut_Menu_Website_Akku-Fensterreiniger.jpg",
+    "product_url": "",
+    "image_file": "window-vacs.jpg"
+  },
+  {
+    "id": 43,
+    "name": "Floor Cleaner",
+    "image_url": "https://s1.kaercher-media.com/images/pim/Produktgruppenbild_300x200px_FC_8.jpg",
+    "product_url": "",
+    "image_file": "floor-cleaner.jpg"
+  },
+  {
+    "id": 45,
+    "name": "Vacuum mop",
+    "image_url": "https://s1.kaercher-media.com/images/pim/FCV02_Produktgruppenbild_300x200px.jpg",
+    "product_url": "",
+    "image_file": "vacuum-mop.jpg"
+  },
+  {
+    "id": 47,
+    "name": "Electric wiping mop",
+    "image_url": "https://s1.kaercher-media.com/images/pim/BildformateFlyOut_Menu_Website_EWM.jpg",
+    "product_url": "",
+    "image_file": "electric-wiping-mop.jpg"
+  },
+  {
+    "id": 49,
+    "name": "Garden Tools",
+    "image_url": "https://s1.kaercher-media.com/images/pim/Rasenmaeher_Produktgruppenbild_300x200_1.jpg",
+    "product_url": "",
+    "image_file": "garden-tools.jpg"
+  },
+  {
+    "id": 51,
+    "name": "Robotic lawn mowers",
+    "image_url": "https://s1.kaercher-media.com/images/pim/1513110_hero_300x200.jpg",
+    "product_url": "",
+    "image_file": "robotic-lawn-mowers.jpg"
+  },
+  {
+    "id": 53,
+    "name": "Electric Ice Scraper",
+    "image_url": "https://s1.kaercher-media.com/images/pim/PGB_elektrischer_Eiskratzer_default_300x200px.jpg",
+    "product_url": "",
+    "image_file": "electric-ice-scraper.jpg"
+  },
+  {
+    "id": 55,
+    "name": "Air treatment",
+    "image_url": "https://s1.kaercher-media.com/images/pim/luftreiniger_300x200px.jpg",
+    "product_url": "",
+    "image_file": "air-treatment.jpg"
+  },
+  {
+    "id": 57,
+    "name": "Water filters",
+    "image_url": "https://s1.kaercher-media.com/images/pim/1024754_hero1_1.jpg",
+    "product_url": "",
+    "image_file": "water-filters.jpg"
+  },
+  {
+    "id": 59,
+    "name": "Accessory",
+    "image_url": "https://s1.kaercher-media.com/images/pim/2644374_hero_01-300x200.jpg",
+    "product_url": "",
+    "image_file": "accessory.jpg"
+  },
+  {
+    "id": 61,
+    "name": "Cleaning agents",
+    "image_url": "https://s1.kaercher-media.com/images/pim/Reinigungsmittel_Menu_Bild_300x200.jpg",
+    "product_url": "",
+    "image_file": "cleaning-agents.jpg"
+  },
+  {
+    "id": 63,
+    "name": "Spare Parts",
+    "image_url": "/static/media/spare_parts.199227a6a8a7da7aa775.jpg",
+    "product_url": "",
+    "image_file": "spare-parts.jpg"
+  }
+]
