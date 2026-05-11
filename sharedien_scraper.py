@@ -25,11 +25,11 @@ LOGIN_URL = "https://auth.kaercher.com/account/login"
 OUTPUT_DIR = Path(__file__).parent / "sharedien_output"
 IMAGES_DIR = OUTPUT_DIR / "images"
 DATA_FILE = OUTPUT_DIR / "assets.json"
-USER_DATA_DIR = Path(__file__).parent / ".playwright_data"
+COOKIES_FILE = Path(__file__).parent / "sharedien_cookies.json"
+STORAGE_FILE = Path(__file__).parent / "sharedien_storage.json"
 
 OUTPUT_DIR.mkdir(exist_ok=True)
 IMAGES_DIR.mkdir(exist_ok=True)
-USER_DATA_DIR.mkdir(exist_ok=True)
 
 # Playwright config
 HEADLESS = False  # Set to True for headless mode
@@ -77,15 +77,19 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
     seen_image_urls = set()
 
     with sync_playwright() as p:
-        # Use persistent context to save cookies and session data
-        context = p.chromium.launch_persistent_context(
-            user_data_dir=str(USER_DATA_DIR),
-            channel="msedge",
-            headless=HEADLESS,
-            slow_mo=SLOW_MO,
+        browser = p.chromium.launch(channel="msedge", headless=HEADLESS, slow_mo=SLOW_MO)
+        context = browser.new_context(
             viewport={"width": 1920, "height": 1080},
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         )
+
+        # Load cookies if they exist
+        if COOKIES_FILE.exists():
+            with open(COOKIES_FILE, 'r') as f:
+                cookies = json.load(f)
+                context.add_cookies(cookies)
+                print("Loaded cookies from previous session.")
+
         page = context.new_page()
         page.set_default_timeout(TIMEOUT)
 
@@ -93,7 +97,17 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
         print(f"Navigating to {DASHBOARDS_URL} ...")
         page.goto(DASHBOARDS_URL, wait_until="domcontentloaded", timeout=60000)
         page.wait_for_load_state("networkidle", timeout=60000)
-        time.sleep(5)
+        time.sleep(3)
+
+        # Restore localStorage if it exists
+        if STORAGE_FILE.exists():
+            with open(STORAGE_FILE, 'r') as f:
+                storage = json.load(f)
+                for key, value in storage.items():
+                    page.evaluate(f"localStorage.setItem('{key}', '{value}')")
+                print("Restored localStorage from previous session.")
+
+        time.sleep(2)
 
         # ── Handle disclaimer page ───────────────────────────────────────────
         if "Disclaimer" in page.url or page.locator("h1:has-text('Conditions of Use'), h1:has-text('Disclaimer')").count() > 0:
@@ -351,7 +365,22 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
                 print(f"[{i+1}/{total}] Error extracting asset: {e}")
                 continue
 
-        context.close()
+        # Save cookies for next session
+        cookies = context.cookies()
+        with open(COOKIES_FILE, 'w') as f:
+            json.dump(cookies, f)
+        print("Saved cookies for next session.")
+
+        # Save localStorage for next session
+        try:
+            storage = page.evaluate("() => { const s = {}; for(let i=0; i<localStorage.length; i++) { const k = localStorage.key(i); s[k] = localStorage.getItem(k); } return s; }")
+            with open(STORAGE_FILE, 'w') as f:
+                json.dump(storage, f)
+            print("Saved localStorage for next session.")
+        except Exception as e:
+            print(f"Could not save localStorage: {e}")
+
+        browser.close()
 
     return assets
 

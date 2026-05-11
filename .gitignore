@@ -1,6 +1,10 @@
 # Playwright user data (cookies, session storage)
 .playwright_data/
 
+# Cookies and storage files
+sharedien_cookies.json
+sharedien_storage.json
+
 # Output directories
 output/
 sharedien_output/
