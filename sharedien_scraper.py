@@ -118,6 +118,10 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
                     page.wait_for_load_state("networkidle", timeout=30000)
                     print("  ✓ Disclaimer accepted")
                     time.sleep(3)
+                    # Re-navigate to product browser after accepting
+                    page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
+                    page.wait_for_load_state("networkidle", timeout=60000)
+                    time.sleep(5)
                 else:
                     print("  ✗ Could not find accept button with JavaScript.")
                     # Try Playwright selectors as fallback
@@ -152,22 +156,41 @@ def scrape_sharedien_assets(username: str = None, password: str = None):
                             page.wait_for_load_state("networkidle", timeout=30000)
                             print("  ✓ Disclaimer accepted")
                             time.sleep(3)
+                            # Re-navigate to product browser after accepting
+                            page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
+                            page.wait_for_load_state("networkidle", timeout=60000)
+                            time.sleep(5)
                             break
                     else:
                         print("  ✗ Could not find accept button automatically.")
                         print("  Please accept the disclaimer in the browser window.")
                         input("  Press ENTER after accepting the disclaimer...")
+                        # Re-navigate to product browser after manual acceptance
+                        page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
+                        page.wait_for_load_state("networkidle", timeout=60000)
+                        time.sleep(5)
             except Exception as e:
                 print(f"  ✗ Error accepting disclaimer: {e}")
                 print("  Please accept the disclaimer in the browser window.")
                 input("  Press ENTER after accepting the disclaimer...")
+                # Re-navigate to product browser after manual acceptance
+                page.goto(PRODUCT_BROWSER_URL, wait_until="domcontentloaded", timeout=60000)
+                page.wait_for_load_state("networkidle", timeout=60000)
+                time.sleep(5)
 
         # ── Handle login page ─────────────────────────────────────────────────
         if "login" in page.url.lower() or "authentication" in page.url.lower():
             print("Detected login page. Please log in manually with your Sharedien/Kärcher credentials.")
             print("The credentials NL-3001004869 are for marketingportal, not Sharedien.")
-            input("Press ENTER after you have logged in and the product browser page has loaded...")
+            print("If you see a reCAPTCHA, solve it in the browser window.")
+            input("Press ENTER after you have logged in, solved any reCAPTCHA, and the product browser page has loaded...")
             time.sleep(5)
+
+        # ── Check for reCAPTCHA on any page ─────────────────────────────────────
+        if page.locator("iframe[src*='recaptcha'], div[class*='recaptcha'], .g-recaptcha").count() > 0:
+            print("Detected reCAPTCHA challenge. Please solve it in the browser window.")
+            input("Press ENTER after solving the reCAPTCHA...")
+            time.sleep(3)
 
         # Give SPA time to render
         print("Waiting for SPA to render...")
